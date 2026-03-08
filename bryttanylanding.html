@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bryttany LeShoure | Life Insurance Broker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<style>
+  :root {
+    --gold: #D4A843;
+    --gold-light: #F2C96E;
+    --cream: #FDF6EC;
+    --dark: #0E0A04;
+    --warm: #1C1409;
+    --text: #2A1F0A;
+    --accent: #E8521A;
+    --rose: #C4455A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 60px 24px 40px;
+    overflow: hidden;
+  }
+
+  /* Radial glow background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140%;
+    height: 90%;
+    background: radial-gradient(ellipse at center top,
+      rgba(212,168,67,0.22) 0%,
+      rgba(228,82,26,0.08) 40%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Decorative diagonal lines */
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-lines::before,
+  .hero-lines::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 200%;
+    background: linear-gradient(to bottom, transparent, rgba(212,168,67,0.15), transparent);
+    top: -50%;
+  }
+
+  .hero-lines::before { left: 20%; transform: rotate(15deg); }
+  .hero-lines::after  { right: 20%; transform: rotate(-15deg); }
+
+  /* Floating orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    animation: drift 8s ease-in-out infinite alternate;
+  }
+
+  .orb-1 {
+    width: 400px; height: 400px;
+    background: rgba(212,168,67,0.12);
+    top: -100px; right: -100px;
+    animation-delay: 0s;
+  }
+
+  .orb-2 {
+    width: 300px; height: 300px;
+    background: rgba(196,69,90,0.1);
+    bottom: -50px; left: -80px;
+    animation-delay: 3s;
+  }
+
+  .orb-3 {
+    width: 200px; height: 200px;
+    background: rgba(228,82,26,0.08);
+    top: 40%; left: 10%;
+    animation-delay: 5s;
+  }
+
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, -20px) scale(1.05); }
+  }
+
+  /* Cross icon */
+  .cross-icon {
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+    letter-spacing: 4px;
+  }
+
+  /* Eyebrow tag */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,168,67,0.12);
+    border: 1px solid rgba(212,168,67,0.25);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  /* Main headline */
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.0;
+    text-align: center;
+    max-width: 800px;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.35s;
+  }
+
+  .hero-headline .line-gold {
+    display: block;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), #B8892E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-headline .line-white {
+    display: block;
+    color: var(--cream);
+  }
+
+  .hero-headline .line-italic {
+    display: block;
+    font-style: italic;
+    color: rgba(253,246,236,0.7);
+    font-size: 0.7em;
+    margin-top: 6px;
+  }
+
+  /* Subheadline */
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    text-align: center;
+    max-width: 520px;
+    line-height: 1.7;
+    color: rgba(253,246,236,0.65);
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .hero-sub strong { color: var(--cream); font-weight: 600; }
+
+  /* CTA Button */
+  .cta-wrap {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--gold), #B8892E);
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    padding: 18px 44px;
+    border-radius: 60px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 8px 40px rgba(212,168,67,0.35), 0 2px 8px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 16px 50px rgba(212,168,67,0.5), 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  .cta-btn:hover::before { opacity: 1; }
+
+  .cta-btn:active { transform: translateY(0) scale(0.98); }
+
+  .cta-arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+  }
+
+  .cta-btn:hover .cta-arrow { transform: translateX(4px); }
+
+  .cta-note {
+    font-size: 0.78rem;
+    color: rgba(253,246,236,0.35);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── TRUST STRIP ── */
+  .trust-strip {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 32px 24px;
+    border-top: 1px solid rgba(212,168,67,0.1);
+    border-bottom: 1px solid rgba(212,168,67,0.1);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.8s;
+  }
+
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .trust-icon { font-size: 1.6rem; }
+
+  .trust-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(253,246,236,0.45);
+  }
+
+  .trust-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+
+  /* ── WHAT YOU GET ── */
+  .section {
+    padding: 80px 24px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .section-label-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(212,168,67,0.3), transparent);
+  }
+
+  .section-label-text {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .feature-card {
+    background: rgba(212,168,67,0.04);
+    border: 1px solid rgba(212,168,67,0.12);
+    border-radius: 20px;
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .feature-card:hover {
+    background: rgba(212,168,67,0.08);
+    border-color: rgba(212,168,67,0.25);
+    transform: translateY(-4px);
+  }
+
+  .feature-card:hover::before { opacity: 1; }
+
+  .feature-emoji { font-size: 2rem; margin-bottom: 14px; display: block; }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .feature-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(253,246,236,0.55);
+  }
+
+  /* ── BOOKING SECTION ── */
+  .booking-section {
+    background: rgba(212,168,67,0.04);
+    border-top: 1px solid rgba(212,168,67,0.1);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .booking-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .booking-headline span {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .booking-sub {
+    font-size: 1rem;
+    color: rgba(253,246,236,0.55);
+    max-width: 440px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  /* Calendly inline widget */
+  .calendly-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(212,168,67,0.15);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 32px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(212,168,67,0.08);
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .footer-tag {
+    font-size: 0.75rem;
+    color: rgba(253,246,236,0.25);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .trust-strip { gap: 24px; }
+    .cta-btn { padding: 16px 32px; font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-lines"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="cross-icon">✝</div>
+
+  <div class="eyebrow">
+    <div class="eyebrow-dot"></div>
+    Licensed Life Insurance Broker
+    <div class="eyebrow-dot"></div>
+  </div>
+
+  <h1 class="hero-headline">
+    <span class="line-white">Protect Your Family.</span>
+    <span class="line-gold">Build Your Legacy.</span>
+    <span class="line-italic">Guided by Faith. Built for Generations.</span>
+  </h1>
+
+  <p class="hero-sub">
+    Hi, I'm <strong>Bryttany</strong> — and I help families secure their future with the right life insurance coverage. One private call can change everything for the people you love most.
+  </p>
+
+  <div class="cta-wrap">
+    <button class="cta-btn" onclick="openCalendly()">
+      Book Your Private Call
+      <span class="cta-arrow">→</span>
+    </button>
+    <span class="cta-note">Free • No pressure • 100% personalized</span>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item">
+    <span class="trust-icon">🛡️</span>
+    <span class="trust-value">Licensed</span>
+    <span class="trust-label">Life Insurance Broker</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">👨‍👩‍👧‍👦</span>
+    <span class="trust-value">Families</span>
+    <span class="trust-label">Protected Every Day</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">✝️</span>
+    <span class="trust-value">Faith-Driven</span>
+    <span class="trust-label">Purpose Behind Every Policy</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">📞</span>
+    <span class="trust-value">Private Call</span>
+    <span class="trust-label">No Obligation. Ever.</span>
+  </div>
+</div>
+
+<!-- WHAT TO EXPECT -->
+<section class="section">
+  <div class="section-label reveal">
+    <div class="section-label-line"></div>
+    <span class="section-label-text">What Happens on the Call</span>
+    <div class="section-label-line" style="background: linear-gradient(to left, rgba(212,168,67,0.3), transparent);"></div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="feature-card reveal">
+      <span class="feature-emoji">💬</span>
+      <div class="feature-title">We Talk About Your Family</div>
+      <div class="feature-desc">No scripts. No pressure. Just an honest conversation about what matters most to you and the people who depend on you.</div>
+    </div>
+    <div class="feature-card reveal" style="transition-delay: 0.1s;">
+      <span class="feature-emoji">🔍</span>
+      <div class="feature-title">We Find the Right Fit</div>
+      <div class="feature-desc">Every family is different. I'll walk you through options that actually make sense for your life — not a one-size-fits-all plan.</div>
+    </div>
+    <div class="feature-card reveal" style="transition-delay: 0.2s;">
+      <span class="feature-emoji">🌱</span>
+      <div class="feature-title">We Build for Generations</div>
+      <div class="feature-desc">The goal isn't just coverage — it's legacy. Leaving something behind for the people you love is one of the greatest gifts you can give.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<div class="booking-section" id="booking">
+  <h2 class="booking-headline reveal">
+    Ready to <span>Secure Your Legacy?</span>
+  </h2>
+  <p class="booking-sub reveal">Pick a time that works for you. The call is free, private, and completely on your terms.</p>
+
+  <div class="calendly-wrap reveal">
+    <div class="calendly-inline-widget"
+      data-url="https://calendly.com/bryttany-leshoure88/?hide_gdpr_banner=1&background_color=0E0A04&text_color=FDF6EC&primary_color=D4A843"
+      style="min-width:280px; height:700px;">
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-name">Bryttany LeShoure</div>
+  <div class="footer-tag">Licensed Life Insurance Broker &nbsp;·&nbsp; Built for Generations ✝️</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // Calendly popup fallback for hero CTA
+  function openCalendly() {
+    var booking = document.getElementById('booking');
+    booking.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
